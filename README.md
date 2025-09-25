@@ -16,6 +16,7 @@ El proyecto incluye:
 ├── modelo_iris.py      # Script para entrenar el modelo
 ├── modelo_iris.pkl     # Modelo entrenado serializado
 ├── api.py             # API Flask con endpoint /predict
+├── test_api.py        # Script de pruebas para la API
 ├── requirements.txt   # Dependencias del proyecto
 ├── Dockerfile         # Imagen Docker
 ├── deployment.yaml    # Deployment de Kubernetes
@@ -52,6 +53,11 @@ python api.py
 ```
 
 La API estará disponible en `http://localhost:5000`
+
+### 5. Probar la API (opcional)
+```bash
+python test_api.py
+```
 
 ## 📡 API Usage
 
