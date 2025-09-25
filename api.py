@@ -36,6 +36,7 @@ else:
 # Endpoint de salud
 # --------------------------------------------------
 @app.route('/', methods=['GET'])
+@app.route('/health', methods=['GET'])
 def health_check():
     """Devuelve el estado de la API y del modelo."""
     status = 'ok' if model is not None else 'model-missing'
