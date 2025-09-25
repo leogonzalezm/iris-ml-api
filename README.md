@@ -122,6 +122,56 @@ docker run -p 5000:5000 iris-ml-api
 
 ## ☸️ Despliegue en Kubernetes
 
+## 🔄 CI/CD: Flujo Simplificado de Deploy
+
+Se ha configurado un pipeline de GitHub Actions en `.github/workflows/ci-cd.yml` que demuestra un flujo completo de CI/CD para modelos de ML:
+
+### 🔄 Proceso automatizado
+
+**En cada push a `main`:**
+
+1. **Tests** 🧪
+   - Instala dependencias Python
+   - Lanza la API en background
+   - Prueba endpoint `/health`
+   - Prueba endpoint `/predict` con datos reales
+   - Termina la API limpiamente
+
+2. **Build & Deploy** 🚀 (solo si tests pasan)
+   - Construye imagen Docker
+   - Sube a Docker Hub con dos tags:
+     - `latest`
+     - `<commit-sha>` (trazabilidad)
+
+### ⚙️ Configuración requerida
+
+En tu repositorio de GitHub: **Settings > Secrets > Actions**
+
+Crea estos secretos:
+- `DOCKERHUB_USERNAME`: tu usuario de Docker Hub  
+- `DOCKERHUB_TOKEN`: token de acceso (Docker Hub > Account Settings > Security)
+
+### ▶️ Uso
+
+```bash
+# Ejecución manual desde GitHub Actions tab
+# O simplemente: git push origin main
+
+# Descargar imagen publicada
+docker pull tu_usuario/iris-ml-api:latest
+docker run -p 5000:5000 tu_usuario/iris-ml-api:latest
+```
+
+### 📚 Valor educativo
+
+Este pipeline enseña:
+- Tests de integración básicos con curl
+- Manejo de procesos en background en CI
+- Docker build y publish automático  
+- Dependencias entre jobs (`needs: tests`)
+- Gestión de secretos en GitHub Actions
+
+
 ### 1. Aplicar deployment
 ```bash
 kubectl apply -f deployment.yaml
